@@ -25,7 +25,6 @@ public class ControllerTests {
     void shouldReturnAllRecords() throws Exception {
 
         /*
-        //TODO
         Story:
 
         Given there are a number of saved student records
@@ -44,5 +43,18 @@ public class ControllerTests {
                         jsonPath("$.size()",
                                 CoreMatchers.is(students.size())))
                 .andExpect(jsonPath("$[0].name", CoreMatchers.is("Jack")));
+    }
+
+    @Test
+    void shouldReturnRecord_GivenValidRecordId() {
+
+        /*
+        //TODO
+        Story:
+
+        Given a valid student record in database
+        When i try to retrieve this record using its id
+        Then the record is retruned
+        */
     }
 }
