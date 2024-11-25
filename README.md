@@ -2,8 +2,9 @@
 
 This is a students records backend app. Create CRUD endpoints using TDD to create, retrieve, update and delete records
 
-Create SQS queue, and send messages to the queue. Then the m,essages can be saved to the ElastiCache.
-
+- improve my design and problem solving approach
+- Practise TDD
+- Practise mocking in tests and where it makes sense to mock or not to mock
 ## Requirements
 * Spring Boot
 * Java 17
