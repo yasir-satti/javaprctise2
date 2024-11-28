@@ -25,4 +25,10 @@ public class Controller {
         List<Student> students = studentsService.retrieveAll();
         return new ResponseEntity<>(students, HttpStatus.OK);
     }
+
+    @GetMapping("/record/{id}")
+    public ResponseEntity<Student> getRecordById(int id) throws Exception {
+        Student student = studentsService.retrieveById(id);
+        return new ResponseEntity<>(student, HttpStatus.OK);
+    }
 }
