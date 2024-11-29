@@ -34,10 +34,10 @@ public class StudentsService {
         }
     }
 
-    public Student retrieveById(int Id) throws Exception {
+    public Optional<Student> retrieveById(int Id) throws Exception {
         Optional<Student> record = studentsRepository.findById(Id);
         if (record.isPresent()) {
-            return record.get();
+            return Optional.of(record.get());
         } else {
             throw new Exception("No Student record was found with Id " +
                     Integer.toHexString(Id) + ".");

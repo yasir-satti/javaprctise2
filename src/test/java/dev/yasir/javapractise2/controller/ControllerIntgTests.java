@@ -1,7 +1,9 @@
 package dev.yasir.javapractise2.controller;
 
 import dev.yasir.javapractise2.entity.Student;
+import dev.yasir.javapractise2.utils.ReplaceCamelCase;
 import org.hamcrest.CoreMatchers;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,6 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@DisplayNameGeneration(ReplaceCamelCase.class)
 public class ControllerIntgTests {
 
     @Autowired
@@ -48,7 +51,7 @@ public class ControllerIntgTests {
     }
 
     @Test
-    void shouldReturnRecord_GivenValidRecordId() {
+    void shouldReturnRecordGivenValidRecordId() {
 
         /*
         //TODO

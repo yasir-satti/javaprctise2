@@ -1,6 +1,8 @@
 package dev.yasir.javapractise2.service;
 
 import dev.yasir.javapractise2.entity.Student;
+import dev.yasir.javapractise2.utils.ReplaceCamelCase;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -8,6 +10,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
@@ -15,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 
 @ActiveProfiles(value = "application.properties")
 @DataJpaTest
+@DisplayNameGeneration(ReplaceCamelCase.class)
 public class StudentsServiceTests {
 
     List<Student> students = Arrays.asList(
@@ -25,7 +29,7 @@ public class StudentsServiceTests {
     private StudentsService studentsService;
 
     @Test
-    void shouldInsertNewRecord_GivenValidSRecord() throws Exception {
+    void shouldInsertNewRecordGivenValidSRecord() throws Exception {
 
         /*
         Story:
@@ -41,7 +45,7 @@ public class StudentsServiceTests {
     }
 
     @Test
-    void shouldShowMessageRecordAlreadyExistsTryingToInsertNewRecord_GivenExistingRecord() {
+    void shouldShowMessageRecordAlreadyExistsTryingToInsertNewRecordGivenExistingRecord() {
 
         /*
         Story:
@@ -61,7 +65,7 @@ public class StudentsServiceTests {
     }
 
     @Test
-    void shouldUpdateExistingRecordById_GivenValidRecordByIdExists() throws Exception {
+    void shouldUpdateExistingRecordByIdGivenValidRecordByIdExists() throws Exception {
 
         /*
         Story:
@@ -81,7 +85,7 @@ public class StudentsServiceTests {
     }
 
     @Test
-    void shouldShowMessageRecordNotFoundToUpdate_GivenNoMatchingRecordByIdExists() {
+    void shouldShowMessageRecordNotFoundToUpdateGivenNoMatchingRecordByIdExists() {
 
         /*
         Story:
@@ -103,7 +107,7 @@ public class StudentsServiceTests {
     }
 
     @Test
-    void shouldReturnListOfStudentRecords_GivenRecordsExistInDb() throws Exception {
+    void shouldReturnListOfStudentRecordsGivenRecordsExistInDb() throws Exception {
 
         /*
         Story:
@@ -119,7 +123,7 @@ public class StudentsServiceTests {
     }
 
     @Test
-    void shouldShowMessageNoRecordsFoundWhenRetrievingAllRecords_GivenNoRecordsExistInDb() throws Exception {
+    void shouldShowMessageNoRecordsFoundWhenRetrievingAllRecordsGivenNoRecordsExistInDb() throws Exception {
 
         /*
         Story:
@@ -137,7 +141,7 @@ public class StudentsServiceTests {
     }
 
     @Test
-    void shouldReturnAStudentRecords_GivenValidRecordId() throws Exception {
+    void shouldReturnAStudentRecordsGivenValidRecordId() throws Exception {
 
         /*
         Story:
@@ -147,13 +151,13 @@ public class StudentsServiceTests {
         Then the requested record is returned
         */
 
-        Student returnedRecord = studentsService.retrieveById(1);
+        Optional<Student> returnedRecord = studentsService.retrieveById(1);
 
-        assertThat(returnedRecord).isEqualTo(students.getFirst());
+        assertThat(returnedRecord).isEqualTo(Optional.of(students.getFirst()));
     }
 
     @Test
-    void shouldShowMessageNoRecordByIdFound_GivenInvalidRecordId() {
+    void shouldShowMessageNoRecordByIdFoundGivenInvalidRecordId() {
 
         /*
         Story:
@@ -168,7 +172,7 @@ public class StudentsServiceTests {
         assertThat(thrown).hasMessage("No Student record was found with Id 0.");    }
 
     @Test
-    void shouldDeleteAllRecords_GivenThereAreRecordsInDb() throws Exception {
+    void shouldDeleteAllRecordsGivenThereAreRecordsInDb() throws Exception {
 
         /*
         Story:
@@ -192,7 +196,7 @@ public class StudentsServiceTests {
     }
 
     @Test
-    void shouldShowMessageNoRecordsFoundWhenDeletingAll_GivenNoRecordsExistInDb() throws Exception {
+    void shouldShowMessageNoRecordsFoundWhenDeletingAllGivenNoRecordsExistInDb() throws Exception {
 
         /*
         Story:

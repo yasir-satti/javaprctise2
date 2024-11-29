@@ -3,12 +3,15 @@ package dev.yasir.javapractise2.controller;
 import dev.yasir.javapractise2.entity.Student;
 import dev.yasir.javapractise2.repository.StudentsRepository;
 import dev.yasir.javapractise2.service.StudentsService;
+import dev.yasir.javapractise2.utils.ReplaceCamelCase;
+import org.junit.jupiter.api.DisplayNameGeneration;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +24,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest
+@DisplayNameGeneration(ReplaceCamelCase.class)
 public class ControllerTests {
 
     @Mock
@@ -37,7 +41,7 @@ public class ControllerTests {
             new Student("Maya", "Alan", 54));
 
     @Test
-    void shouldReturnAllRecords_GivenValidRecordsAreInDb() throws Exception {
+    void shouldReturnAllRecordsGivenValidRecordsAreInDb() throws Exception {
 
         /*
         Story:
@@ -56,7 +60,7 @@ public class ControllerTests {
     }
 
     @Test
-    void shouldShowMessageNoRecordsFound_GivenNoRecordsInDb() throws Exception {
+    void shouldShowMessageNoRecordsFoundGivenNoRecordsInDb() throws Exception {
 
         /*
         Story:
@@ -71,11 +75,12 @@ public class ControllerTests {
 
         Throwable thrown = catchThrowable(() -> controller.getAllRecords());
 
-        assertThat(thrown.getMessage().contains("No Student records were found."));
+        assertThat(((ResponseStatusException) thrown).getBody().getDetail())
+                .isEqualTo("No Student records were found.");
     }
 
     @Test
-    void shouldReturnRecord_GivenValidRecordId() throws Exception {
+    void shouldReturnRecordGivenValidRecordId() throws Exception {
 
         /*
         Story:
@@ -86,15 +91,37 @@ public class ControllerTests {
         */
 
         when(studentsService.retrieveById(1))
-                .thenReturn(students.getFirst());
+                .thenReturn(Optional.ofNullable(students.getFirst()));
 
-        ResponseEntity<Student> response = controller.getRecordById(1);
+        ResponseEntity<Optional<Student>> response = controller.getRecordById(1);
 
-        assertThat(response.getBody()).isEqualTo(students.getFirst());
+        assertThat(response.getBody().get()).isEqualTo(students.getFirst());
     }
 
     @Test
-    void shouldDeleteAllRecords_GivenValidRecordsInDb() throws Exception {
+    void shoudlShowMessageNoRecordFoundGivenInvalidId() throws Exception {
+
+        /*
+        Story:
+
+        Given a invalid student record id
+        When i try to retrieve a record using the invalid
+        Then a message is shown saying "No Student record was found with id x."
+        */
+
+        Optional<Student> empty = Optional.empty();
+        when(studentsService.retrieveById(1))
+                .thenReturn(empty);
+
+        Throwable thrown = catchThrowable(() -> controller.getRecordById(1));
+
+        assertThat(
+                ((ResponseStatusException) thrown).getBody().getDetail())
+                .isEqualTo("No Student record with id 1 was found.");
+    }
+
+    @Test
+    void shouldDeleteAllRecordsGivenValidRecordsInDb() throws Exception {
 
         /*
         Story:

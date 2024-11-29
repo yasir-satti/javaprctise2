@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -33,9 +34,16 @@ public class Controller {
     }
 
     @GetMapping("/record/{id}")
-    public ResponseEntity<Student> getRecordById(int id) throws Exception {
-        Student student = studentsService.retrieveById(id);
-        return new ResponseEntity<>(student, HttpStatus.OK);
+    public ResponseEntity<Optional<Student>> getRecordById(int id) throws Exception {
+        Optional<Student> student = studentsService.retrieveById(id);
+        if (!student.isEmpty()) {
+            return new ResponseEntity<>(student, HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No Student record with id " +
+                            Long.toHexString(id)
+                            + " was found.");
+        }
     }
 
     @DeleteMapping("/records")
