@@ -2,7 +2,6 @@ package dev.yasir.javapractise2.service;
 
 import dev.yasir.javapractise2.entity.Student;
 import dev.yasir.javapractise2.repository.StudentsRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -12,8 +12,12 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.AssertionsForClassTypes.catchThrowable;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @WebMvcTest
@@ -33,7 +37,7 @@ public class ControllerTests {
             new Student("Maya", "Alan", 54));
 
     @Test
-    void shouldReturnAllRecords() throws Exception {
+    void shouldReturnAllRecords_GivenValidRecordsAreInDb() throws Exception {
 
         /*
         Story:
@@ -43,17 +47,37 @@ public class ControllerTests {
         Then a list of these records is returned
         */
 
-        when(studentsService.retrieveAll()).thenReturn(students);
+        when(studentsService.retrieveAll())
+                .thenReturn(students);
 
         ResponseEntity<List<Student>> response = controller.getAllRecords();
-        assertThat(students).isEqualTo(response.getBody());
+
+        assertThat(response.getBody()).isEqualTo(students);
+    }
+
+    @Test
+    void shouldShowMessageNoRecordsFound_GivenNoRecordsInDb() throws Exception {
+
+        /*
+        Story:
+
+        Given there no student records in db
+        When I try to retrieve records
+        Then a message is shown saying "No Student records were found."
+        */
+
+        when(studentsService.retrieveAll())
+                .thenReturn(Arrays.asList());
+
+        Throwable thrown = catchThrowable(() -> controller.getAllRecords());
+
+        assertThat(thrown.getMessage().contains("No Student records were found."));
     }
 
     @Test
     void shouldReturnRecord_GivenValidRecordId() throws Exception {
 
         /*
-        //TODO
         Story:
 
         Given a valid student record is in database
@@ -61,9 +85,29 @@ public class ControllerTests {
         Then the record is returned
         */
 
-        when(studentsService.retrieveById(0)).thenReturn(students.getFirst());
+        when(studentsService.retrieveById(1))
+                .thenReturn(students.getFirst());
 
-        ResponseEntity<Student> response = controller.getRecordById(0);
-        assertThat(students.getFirst()).isEqualTo(response.getBody());
+        ResponseEntity<Student> response = controller.getRecordById(1);
+
+        assertThat(response.getBody()).isEqualTo(students.getFirst());
+    }
+
+    @Test
+    void shouldDeleteAllRecords_GivenValidRecordsInDb() throws Exception {
+
+        /*
+        Story:
+
+        Given there are a number of student records in db
+        When I try to delete these records
+        Then the records are deleted.
+        */
+
+        doNothing().when(studentsService).deleteAll();
+
+        assertAll(
+                () -> controller.deleteAllRecords()
+        );
     }
 }
