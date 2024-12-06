@@ -2,7 +2,6 @@ package dev.yasir.javapractise2.service;
 
 import dev.yasir.javapractise2.entity.Student;
 import dev.yasir.javapractise2.repository.StudentsRepository;
-import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,10 +34,10 @@ public class StudentsService {
         }
     }
 
-    public Student retrieveById(int Id) throws Exception {
+    public Optional<Student> retrieveById(int Id) throws Exception {
         Optional<Student> record = studentsRepository.findById(Id);
         if (record.isPresent()) {
-            return record.get();
+            return Optional.of(record.get());
         } else {
             throw new Exception("No Student record was found with Id " +
                     Integer.toHexString(Id) + ".");
