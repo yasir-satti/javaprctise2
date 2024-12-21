@@ -86,7 +86,7 @@ public class ControllerTests {
         Story:
 
         Given a valid student record is in database
-        When i try to retrieve this record using its id
+        When I try to retrieve this record using its id
         Then the record is returned
         */
 
@@ -104,8 +104,8 @@ public class ControllerTests {
         /*
         Story:
 
-        Given a invalid student record id
-        When i try to retrieve a record using the invalid
+        Given an invalid student record id
+        When I try to retrieve a record using the invalid
         Then a message is shown saying "No Student record was found with id x."
         */
 

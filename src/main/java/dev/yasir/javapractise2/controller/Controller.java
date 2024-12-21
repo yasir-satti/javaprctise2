@@ -4,10 +4,7 @@ import dev.yasir.javapractise2.entity.Student;
 import dev.yasir.javapractise2.service.StudentsService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -34,7 +31,7 @@ public class Controller {
     }
 
     @GetMapping("/record/{id}")
-    public ResponseEntity<Optional<Student>> getRecordById(int id) throws Exception {
+    public ResponseEntity<Optional<Student>> getRecordById(@PathVariable int id) throws Exception {
         Optional<Student> student = studentsService.retrieveById(id);
         if (!student.isEmpty()) {
             return new ResponseEntity<>(student, HttpStatus.OK);
