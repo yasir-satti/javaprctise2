@@ -29,7 +29,7 @@ public class Controller {
         if (!students.isEmpty()) {
             return new ResponseEntity<>(students, HttpStatus.OK);
         } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No Student records were found.");
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No Student records were found.");
         }
     }
 

@@ -33,8 +33,8 @@ public class ControllerIntgTests {
         Story:
 
         Given there are a number of saved student records
-        When i try to retrieve these records
-        Then a list of these records is retruned
+        When I try to retrieve these records
+        Then a list of these records is returned
         */
 
         List<Student> students = Arrays.asList(
@@ -47,7 +47,7 @@ public class ControllerIntgTests {
                 .andExpect(
                         jsonPath("$.size()",
                                 CoreMatchers.is(students.size())))
-                .andExpect(jsonPath("$[0].name", CoreMatchers.is("Jack")));
+                .andExpect(jsonPath("$[0].name", CoreMatchers.is("name1")));
     }
 
     @Test
@@ -59,7 +59,7 @@ public class ControllerIntgTests {
 
         Given a valid student record in database
         When i try to retrieve this record using its id
-        Then the record is retruned
+        Then the record is returned
         */
     }
 }
