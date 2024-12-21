@@ -39,6 +39,10 @@ public class ControllerIntgTests {
         Given there are a number of saved student records
         When I try to retrieve these records
         Then a list of these records is returned
+
+        AC:
+        1. When I read the records, I get back 2 records
+        2. When I read the records, the first record has the name "name1"
         */
 
         List<Student> students = Arrays.asList(
@@ -63,6 +67,9 @@ public class ControllerIntgTests {
         Given there no student records in db
         When I try to retrieve records
         Then a message is shown saying "No Student records were found."
+
+        AC:
+        1. When trying to read the records, A message "No Student records were found." is returned
         */
 
         mockMvc.perform(delete("/api/records")
@@ -85,6 +92,9 @@ public class ControllerIntgTests {
         Given a valid student record in database
         When I try to retrieve this record using its id
         Then the record is returned
+
+        AC:
+        1. When reading a record with a specified Id, It returns the specified record
         */
 
         mockMvc.perform(get("/api/record/2")
@@ -102,6 +112,9 @@ public class ControllerIntgTests {
         Given an invalid student record id
         When I try to retrieve a record using the invalid
         Then a message is shown saying "No Student record was found with id x."
+
+        AC:
+        1. When trying to read a record with invalid Id, a message "No Student record was found with id x." is retuened
         */
 
         Assertions.assertThatThrownBy(
@@ -120,6 +133,9 @@ public class ControllerIntgTests {
         Given there are a number of student records in db
         When I try to delete these records
         Then the records are deleted.
+
+        AC:
+        1.When trying to delete all records, the records are deleted
         */
 
         mockMvc.perform(get("/api/records")
